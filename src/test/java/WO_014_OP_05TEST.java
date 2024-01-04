@@ -8,9 +8,9 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class WO_014_OP_04TEST extends Hooks{
+public class WO_014_OP_05TEST extends Hooks {
     @Test
-    void VerifyOrderPlacementWithoutName(){
+    void VerifyOrderPlacementWithoutCity(){
         WebElement webOrderButton = driver.findElement(By.xpath("//a[@href='/weborder']"));
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         webOrderButton.click();
@@ -50,11 +50,11 @@ public class WO_014_OP_04TEST extends Hooks{
         WebElement calculateButton = driver.findElement(By.xpath("//button[contains(text(), 'Calculate')]"));
         calculateButton.click();
 
+        WebElement nameField = driver.findElement(By.id("name"));
+        nameField.sendKeys("Inar Academy");
+
         WebElement streetField = driver.findElement(By.id("street"));
         streetField.sendKeys("1100 Congress Ave");
-
-        WebElement cityField = driver.findElement(By.id("city"));
-        cityField.sendKeys("Austin");
 
         WebElement stateField = driver.findElement(By.id("state"));
         stateField.sendKeys("TX");
@@ -84,15 +84,22 @@ public class WO_014_OP_04TEST extends Hooks{
         processButton.click();
 
         js = (JavascriptExecutor) driver;
-        js.executeScript("window.scroll(0,-500)");
+        js.executeScript("window.scroll(0,300)");
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        WebElement nameErrorMessage = driver.findElement(By.xpath("//em[contains(text(),'Name cannot be empty')]"));
-        assertEquals("Name cannot be empty",nameErrorMessage.getText());
+
+        WebElement cityErrorMessage = driver.findElement(By.xpath("//em[contains(text(),'City cannot be empty')]"));
+
+        assertEquals("City cannot be empty",cityErrorMessage.getText());
+
+
+
+
+
 
 
     }
